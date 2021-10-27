@@ -1,0 +1,16 @@
+{
+    "name": "coderex/filemanagementsystem",
+    "description": "Simple file management system",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Saiduzzaman Tuhin",
+            "email": "tuhinsshadow@gmail.com"
+        }
+    ],
+    "require": {}
+}
