@@ -1,3 +1,9 @@
+<?php 
+require_once "../../../vendor/autoload.php";
+use App\Lib\Session;
+Session::checkSession();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,7 +43,7 @@
               <div class="card-header">
                 <h3 class="card-title">Private Files</h3>
                 <div class="card-tools">
-                    <a href="" class="btn btn-success">
+                    <a href="create.php" class="btn btn-success">
                         <i class="fas fa-plus"></i> Add File
                     </a>
                 </div>

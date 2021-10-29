@@ -42,7 +42,7 @@
             </a>
           </li>
           <li class="nav-item menu-open">
-            <a href="views/files" class="nav-link ">
+            <a href="<?php echo __BASE_URI__ ?>views/files" class="nav-link ">
               <i class="nav-icon fas fa-file"></i>
               <p>
                 Files
@@ -50,7 +50,7 @@
             </a>
           </li>
           <li class="nav-item menu-open">
-            <a href="?action=logout" class="nav-link ">
+            <a href="<?php echo __BASE_URI__ ?>?action=logout" class="nav-link ">
               <i class="nav-icon fas fa-sign-out-alt"></i>
               <p>
                 Logout

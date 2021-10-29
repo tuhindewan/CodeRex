@@ -15,7 +15,7 @@ Class Auth {
 
 	public function login($data){
 
-		$password = $_POST['password'];
+		$password = md5($_POST['password']);
 		$username = $_POST['username'];
 
 		$username = mysqli_real_escape_string($this->db->link,$username);
