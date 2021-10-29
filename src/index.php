@@ -1,8 +1,11 @@
 <?php
-// require_once "../vendor/autoload.php";
+define('__BASE_URI__', '/src/');
+require_once "../vendor/autoload.php";
 
-// use App\Lib\Database;
+use App\Lib\Session;
 
+
+Session::checkSession();
 
 // $mysqli = new Database();
 
@@ -24,7 +27,7 @@
 //     echo "<br>";
 // }
 
-define('__BASE_URI__', '/src/');
+
 
 ?>
 
