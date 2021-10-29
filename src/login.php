@@ -1,3 +1,22 @@
+<?php
+require_once "../vendor/autoload.php";
+use App\Classes\Auth;
+use App\Lib\Session;
+
+
+Session::checkLogin();
+
+$auth = new Auth(); 
+
+//Login
+if ($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['login'])) {
+   $msg = $auth->login($_POST);
+}
+
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,10 +40,15 @@
   </div>
   <!-- /.login-logo -->
   <div class="card">
+    <?php 
+      if (isset($msg)) {
+        echo $msg;
+      }
+    ?>
     <div class="card-body login-card-body">
       <p class="login-box-msg">Sign in to start your session</p>
 
-      <form action="assets/index3.html" method="post">
+      <form id="login_form" action="" method="POST">
         <div class="input-group mb-3">
           <input type="username" name="username" class="form-control" placeholder="username">
           <div class="input-group-append">
@@ -44,7 +68,7 @@
         <div class="row">
           <!-- /.col -->
           <div class="col-12 center">
-            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+            <button type="submit" name="login" class="btn btn-primary btn-block">Sign In</button>
           </div>
           <!-- /.col -->
         </div>
@@ -61,5 +85,8 @@
 <script src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="assets/dist/js/adminlte.min.js"></script>
+
+<!-- Login form submit -->
+
 </body>
 </html>

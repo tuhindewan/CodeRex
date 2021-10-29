@@ -40,14 +40,14 @@ class Session{
  public static function checkLogin(){
   self::init();
   if (self::get("userlogin")== true) {
-   header("Location:profile.php");
+   header("Location:index.php");
   }
  }
 
 
  public static function destroy(){
   session_destroy();
-  header("Location:index.php");
+  header("Location:login.php");
  }
 }
 ?>
