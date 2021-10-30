@@ -39,6 +39,9 @@ Session::checkSession();
       <div class="container-fluid">
         <div class="row">
         <div class="col-md-12">
+          <?php if(isset($_SESSION['success'])){ ?>
+        <div class='alert alert-success' role='alert'><?php echo $_SESSION['success'];?></div>
+        <?php } unset($_SESSION['success']);?>
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Private Files</h3>
@@ -111,5 +114,10 @@ Session::checkSession();
 
 <!-- javascrpit files -->
 <?php require_once '../partials/scripts.php' ?>
+<script>
+  setTimeout(()=>{
+            document.querySelector('.alert').remove();
+        }, 3000);
+</script>
 </body>
 </html>

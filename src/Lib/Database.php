@@ -1,7 +1,10 @@
 <?php
 namespace App\Lib;
 
-require_once 'Config/Config.php';
+define("DB_HOST", "db");
+define("DB_USER", "root");
+define("DB_PASS", "example");
+define("DB_NAME", "fms");
 
 Class Database{
     public $host   = DB_HOST;
@@ -36,6 +39,17 @@ Class Database{
           return $result;
         } else {
           return false;
+      }
+    }
+
+    // Insert data
+    public function insert($query){
+      $insert_row = $this->link->query($query) or 
+        die($this->link->error.__LINE__);
+      if($insert_row){
+        return $insert_row;
+      } else {
+        return false;
       }
     }
 

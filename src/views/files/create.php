@@ -1,7 +1,15 @@
 <?php 
 require_once "../../../vendor/autoload.php";
 use App\Lib\Session;
+use App\Classes\FileUpload;
 Session::checkSession();
+$fu = new FileUpload();
+
+if ($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['upload'])) {
+    if($_FILES['file']['size'] != 0){
+        $msg = $fu->storeFiletoDatabase($_POST);
+    }
+ }
 ?>
 
 <!DOCTYPE html>
@@ -33,12 +41,17 @@ Session::checkSession();
         </div>
       </div>
     </div>
-
+    
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
         <div class="row">
         <div class="col-md-12">
+            <?php 
+                if($msg){
+                    echo $msg;
+                }
+            ?>
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Upload new File</h3>
@@ -47,7 +60,7 @@ Session::checkSession();
                 </div>
               </div>
               <!-- /.card-header -->
-              <form id="quickForm">
+              <form id="quickForm" action="" method="POST" enctype="multipart/form-data">
                 <div class="card-body">
                   <div class="form-group">
                     <label for="filename">File name</label>
@@ -58,21 +71,22 @@ Session::checkSession();
                     <input type="text" name="description" class="form-control" id="description" placeholder="Description">
                   </div>
                   <div class="form-group">
-                  <div class="custom-file">
-                      <input type="file" name="file" class="custom-file-input" id="customFile">
-                      <label class="custom-file-label" for="customFile">Choose file</label>
-                    </div>
+                  <label for="description">File</label>
+                    <div class="custom-file">
+                        <input type="file" name="file" class="custom-file-input" id="customFile">
+                        <label class="custom-file-label" for="customFile">Choose file</label>
+                        </div>
                   </div>
                   <div class="form-group mb-0">
                     <div class="custom-control custom-checkbox">
-                      <input type="checkbox" name="sahre" class="custom-control-input" id="exampleCheck1">
+                      <input type="checkbox" name="share" class="custom-control-input" id="exampleCheck1">
                       <label class="custom-control-label" for="exampleCheck1">Share</label>
                     </div>
                   </div>
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" name="upload" class="btn btn-primary">Submit</button>
                 </div>
               </form>
             </div>
@@ -104,11 +118,6 @@ $(function () {
 </script>
 <script>
 $(function () {
-  $.validator.setDefaults({
-    submitHandler: function () {
-      alert( "Form successful submitted!" );
-    }
-  });
   $('#quickForm').validate({
     rules: {
       name: {
@@ -143,6 +152,11 @@ $(function () {
     }
   });
 });
+</script>
+<script>
+  setTimeout(()=>{
+            document.querySelector('.alert').remove();
+        }, 4000);
 </script>
 </body>
 </html>
