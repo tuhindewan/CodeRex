@@ -1,7 +1,13 @@
 <?php 
 require_once "../../../vendor/autoload.php";
+
 use App\Lib\Session;
+use App\Classes\File;
+$file = new File();
 Session::checkSession();
+$files = $file->getIndividualUsersFiles();
+
+
 ?>
 
 <!DOCTYPE html>
@@ -63,33 +69,32 @@ Session::checkSession();
                     </tr>
                   </thead>
                   <tbody>
+                    <?php while($file = $files->fetch_assoc()){ ?>
+
                     <tr>
                       <td>1.</td>
-                      <td>Update software</td>
+                      <td><?php echo $file['name']  ?></td>
+                      <td><?php echo $file['description']  ?></td>
                       <td>
-                        <div class="progress progress-xs">
-                          <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                        </div>
-                      </td>
-                      <td>
-                            <a type="button" title="{{ __('employee.details') }}"
-                                href="">
-                                <i class="fas fa-eye text-cyan"></i>
-                            </a>
-                            /
-                            <a type="button" title="Edit"
-                                href="">
-                                <i class="fas fa-edit text-blue"></i>
-                            </a>
-                            /
-                            <a type="button" href="javascript:void(0)"
-                                onclick="" title="{{ __('employee.delete') }}">
-                                <i class="fas fa-trash text-red"></i>
-                            </a>
-                            
+                          <a type="button" title="{{ __('employee.details') }}"
+                              href="">
+                              <i class="fas fa-eye text-cyan"></i>
+                          </a>
+                          /
+                          <a type="button" title="Edit"
+                              href="">
+                              <i class="fas fa-edit text-blue"></i>
+                          </a>
+                          /
+                          <a type="button" href="javascript:void(0)"
+                              onclick="" title="{{ __('employee.delete') }}">
+                              <i class="fas fa-trash text-red"></i>
+                          </a>   
                       </td>
                     </tr>
-                    
+
+
+                    <?php }?>
                   </tbody>
                 </table>
               </div>

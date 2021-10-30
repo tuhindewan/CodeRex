@@ -6,7 +6,7 @@ use App\Lib\Database;
 use App\Lib\Session;
 
 
-Class FileUpload {
+Class File {
     private $db;
 
 	function __construct()
@@ -38,12 +38,13 @@ Class FileUpload {
                 $description = $_POST['description'];
                 $file = $fname;
                 $share = $_POST['share'];
+                $uploader = Session::get('userid');
                 if(isset($share) && $share == 'on'){
                     $is_public = 1 ;
                 }else{
                     $is_public = 0; 
                 }
-                $query = "INSERT INTO files (name,description,file,is_public) VALUES ('$name','$description','$file','$is_public')";
+                $query = "INSERT INTO files (name, description, file, is_public, uploader) VALUES ('$name', '$description', '$file', '$is_public', '$uploader')";
                 $result = $this->db->insert($query);
                 if($result){
                     $msg = "File uploaded succesfully";
@@ -53,6 +54,14 @@ Class FileUpload {
             } 
         }
         
+    }
+
+    public function getIndividualUsersFiles()
+    {
+        $user = $_SESSION["userid"];
+        $query = "SELECT * FROM files WHERE uploader='$user'";
+        $result = $this->db->select($query);
+        return $result;
     }
 
 }

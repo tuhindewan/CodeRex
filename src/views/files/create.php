@@ -1,9 +1,9 @@
 <?php 
 require_once "../../../vendor/autoload.php";
 use App\Lib\Session;
-use App\Classes\FileUpload;
+use App\Classes\File;
 Session::checkSession();
-$fu = new FileUpload();
+$fu = new File();
 
 if ($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['upload'])) {
     if($_FILES['file']['size'] != 0){

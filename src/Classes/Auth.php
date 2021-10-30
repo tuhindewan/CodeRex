@@ -25,7 +25,11 @@ Class Auth {
 		$result = $this->db->select($query);
 		if ($result!=false) {
 			$value = $result->fetch_assoc();
+			session_start();
 			Session::set('userlogin',true);
+			Session::set('userid',$value['id']);
+
+			Session::set('username',$value['username']);
 			header("Location:index.php?page=home");
 		}else{
 			$msg = "<div class='alert alert-danger' role='alert'>Something went wrong!!.</div>";

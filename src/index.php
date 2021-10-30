@@ -7,6 +7,7 @@ use App\Lib\Session;
 
 Session::checkSession();
 
+
 //Logout
 if (isset($_GET['action']) && $_GET['action']=='logout') {
   Session::destroy();
