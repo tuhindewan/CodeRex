@@ -64,4 +64,11 @@ Class File {
         return $result;
     }
 
+    public function getAllPublicFiles()
+    {
+        $query = "SELECT * FROM files WHERE is_public='1'";
+        $result = $this->db->select($query);
+        return $result; 
+    }
+
 }

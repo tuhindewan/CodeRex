@@ -3,17 +3,17 @@ define('__BASE_URI__', '/src/');
 require_once "../vendor/autoload.php";
 
 use App\Lib\Session;
+use App\Classes\File;
 
 
 Session::checkSession();
-
-
+// Get only public files
+$file = new File();
+$files = $file->getAllPublicFiles();
 //Logout
 if (isset($_GET['action']) && $_GET['action']=='logout') {
   Session::destroy();
 }
-
-
 
 ?>
 
@@ -79,6 +79,68 @@ if (isset($_GET['action']) && $_GET['action']=='logout') {
           </div>
         </div>
         <div class="row">
+          <div class="col-md-12">
+          <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">File List</h3>
+                <div class="card-tools">
+                    
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th style="width: 10px">#</th>
+                      <th>File</th>
+                      <th>Description</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <?php 
+                    $i = 1;
+                    while($file = $files->fetch_assoc()){ ?>
+
+                    <tr>
+                      <td><?php echo $i ?>.</td>
+                      <td><?php echo $file['name']  ?></td>
+                      <td><?php echo $file['description']  ?></td>
+                      <td>
+                        <?php if($file['is_public'] == 1) { ?>
+                        Public
+                        <?php }else { ?>
+                        Private
+                        <?php } ?>
+                      </td>
+                      <td>
+                          <a type="button" title="Download"
+                              href="">
+                              <i class="fas fa-download text-blue"></i>
+                          </a>
+                          /
+                          <a type="button" href="javascript:void(0)"
+                              onclick="" title="Delete">
+                              <i class="fas fa-trash text-red"></i>
+                          </a>   
+                      </td>
+                    </tr>
+
+
+                    <?php $i++; }?>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer clearfix">
+
+              </div>
+            </div>
+            <!-- /.card -->
+          </div>
         </div>
       </div>
     </section>

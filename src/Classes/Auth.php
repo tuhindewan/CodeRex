@@ -28,7 +28,7 @@ Class Auth {
 			session_start();
 			Session::set('userlogin',true);
 			Session::set('userid',$value['id']);
-
+			Session::set('access',$value['type']);
 			Session::set('username',$value['username']);
 			header("Location:index.php?page=home");
 		}else{

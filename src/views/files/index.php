@@ -7,7 +7,6 @@ $file = new File();
 Session::checkSession();
 $files = $file->getIndividualUsersFiles();
 
-
 ?>
 
 <!DOCTYPE html>
@@ -65,36 +64,47 @@ $files = $file->getIndividualUsersFiles();
                       <th style="width: 10px">#</th>
                       <th>File</th>
                       <th>Description</th>
+                      <th>Status</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <?php while($file = $files->fetch_assoc()){ ?>
+
+                    <?php 
+                    $i = 1;
+                    while($file = $files->fetch_assoc()){ ?>
 
                     <tr>
-                      <td>1.</td>
+                      <td><?php echo $i ?>.</td>
                       <td><?php echo $file['name']  ?></td>
                       <td><?php echo $file['description']  ?></td>
                       <td>
-                          <a type="button" title="{{ __('employee.details') }}"
+                        <?php if($file['is_public'] == 1) { ?>
+                        Public
+                        <?php }else { ?>
+                        Private
+                        <?php } ?>
+                      </td>
+                      <td>
+                          <a type="button" title="Share"
                               href="">
-                              <i class="fas fa-eye text-cyan"></i>
+                              <i class="fas fa-share text-cyan"></i>
                           </a>
                           /
-                          <a type="button" title="Edit"
+                          <a type="button" title="Download"
                               href="">
-                              <i class="fas fa-edit text-blue"></i>
+                              <i class="fas fa-download text-blue"></i>
                           </a>
                           /
                           <a type="button" href="javascript:void(0)"
-                              onclick="" title="{{ __('employee.delete') }}">
+                              onclick="" title="Delete">
                               <i class="fas fa-trash text-red"></i>
                           </a>   
                       </td>
                     </tr>
 
 
-                    <?php }?>
+                    <?php $i++; }?>
                   </tbody>
                 </table>
               </div>
