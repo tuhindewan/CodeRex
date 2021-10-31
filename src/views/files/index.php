@@ -15,6 +15,11 @@ if(isset($_GET['share'])){
   $fID = $_GET['share'];
   $msg = $file->shareFile($fID);
 }
+
+if(isset($_GET['download'])){
+  $fID = $_GET['download'];
+  $msg = $file->downloadFile($fID);
+}
 ?>
 
 <!DOCTYPE html>
@@ -100,7 +105,7 @@ if(isset($_GET['share'])){
                           </a>
                           /
                           <a type="button" title="Download"
-                              href="">
+                              href="index.php?download=<?php echo $file['id']; ?>">
                               <i class="fas fa-download text-blue"></i>
                           </a>
                           /

@@ -103,4 +103,25 @@ Class File {
         }
     }
 
+    public function downloadFile($id)
+    {
+        $query = "SELECT * FROM files WHERE id='$id'";
+        $result = $this->db->delete($query);
+        $file = mysqli_fetch_assoc($result);
+        $base_dir = realpath($_SERVER["DOCUMENT_ROOT"]);
+        $downloadable =  "$base_dir/src/assets/uploads/".$file['file'];
+        $fp = fopen($downloadable, "r") ;
+        if (file_exists($downloadable)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/pdf');
+            header('Content-Disposition: attachment; filename="'.basename($file['file']).'"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($file['file']));
+            readfile($downloadable);
+            exit;
+        }
+    }
+
 }
