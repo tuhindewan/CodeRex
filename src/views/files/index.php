@@ -1,12 +1,15 @@
 <?php 
 require_once "../../../vendor/autoload.php";
-
+define('__BASE_URI__', '/src/');
 use App\Lib\Session;
 use App\Classes\File;
 $file = new File();
 Session::checkSession();
 $files = $file->getIndividualUsersFiles();
-
+if(isset($_GET['del'])){
+  $fID = $_GET['del'];
+  $msg = $file->deleteFile($fID);
+}
 ?>
 
 <!DOCTYPE html>
@@ -96,8 +99,8 @@ $files = $file->getIndividualUsersFiles();
                               <i class="fas fa-download text-blue"></i>
                           </a>
                           /
-                          <a type="button" href="javascript:void(0)"
-                              onclick="" title="Delete">
+                          <a type="button" href="index.php?del=<?php echo $file['id']; ?>"
+                            title="Delete" onClick="return confirm('Do you really want to delete');">
                               <i class="fas fa-trash text-red"></i>
                           </a>   
                       </td>

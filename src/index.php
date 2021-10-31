@@ -120,12 +120,7 @@ if (isset($_GET['action']) && $_GET['action']=='logout') {
                           <a type="button" title="Download"
                               href="">
                               <i class="fas fa-download text-blue"></i>
-                          </a>
-                          /
-                          <a type="button" href="javascript:void(0)"
-                              onclick="" title="Delete">
-                              <i class="fas fa-trash text-red"></i>
-                          </a>   
+                          </a>  
                       </td>
                     </tr>
 

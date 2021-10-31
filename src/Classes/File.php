@@ -71,4 +71,24 @@ Class File {
         return $result; 
     }
 
+    public function deleteFile($id)
+    {   
+        $query = "SELECT * FROM files WHERE id='$id'";
+        $result = $this->db->select($query);
+        $file = mysqli_fetch_assoc($result);
+        $base_dir = realpath($_SERVER["DOCUMENT_ROOT"]);
+        $file_delete =  "$base_dir/src/assets/uploads/".$file['file'];
+        if (file_exists($file_delete)) {
+            unlink($file_delete);
+        }
+        $query = "DELETE FROM files WHERE id='$id'";
+        $result = $this->db->delete($query);
+        if($result){
+            $msg = "File deleted succesfully";
+            Session::set('success',$msg);
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            exit;
+        }
+    }
+
 }
