@@ -10,6 +10,11 @@ if(isset($_GET['del'])){
   $fID = $_GET['del'];
   $msg = $file->deleteFile($fID);
 }
+
+if(isset($_GET['share'])){
+  $fID = $_GET['share'];
+  $msg = $file->shareFile($fID);
+}
 ?>
 
 <!DOCTYPE html>
@@ -90,7 +95,7 @@ if(isset($_GET['del'])){
                       </td>
                       <td>
                           <a type="button" title="Share"
-                              href="">
+                              href="index.php?share=<?php echo $file['id']; ?>">
                               <i class="fas fa-share text-cyan"></i>
                           </a>
                           /

@@ -91,4 +91,16 @@ Class File {
         }
     }
 
+    public function shareFile($id)
+    {
+        $query = "UPDATE files SET is_public='1' WHERE id='$id'";
+        $result = $this->db->delete($query);
+        if($result){
+            $msg = "File shared succesfully";
+            Session::set('success',$msg);
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            exit;
+        }
+    }
+
 }
