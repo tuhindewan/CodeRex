@@ -5,34 +5,45 @@ namespace App\Classes;
 use App\Lib\Database;
 use App\Lib\Session;
 
-
+/**
+*Database Class
+**/
 Class File {
     private $db;
 
+    // Initiate database connection
 	function __construct()
 	{
         $this->db = new Database();
 	}
 
+    // File information store to database
+    // Redirect to index page with session
     public function storeFiletoDatabase($data)
     {
+        // Allowed file extension
         $allowed_extension = array(
             "pdf",
             "jpeg"
         );
+
         $file_extension = pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION);
-        if (! file_exists($_FILES["file"]["tmp_name"])) {
+
+        if (! file_exists($_FILES["file"]["tmp_name"])) { // File exist validation
             $msg = "<div class='alert alert-danger' role='alert'>Choose file to upload.</div>";
 			return $msg;
-        }else if (! in_array($file_extension, $allowed_extension)) {
+        }else if (! in_array($file_extension, $allowed_extension)) { // File format extension validation
             $msg = "<div class='alert alert-danger' role='alert'>Upload valid files. Only PDF and JPEG are allowed.</div>";
 			return $msg;
-        }else if (($_FILES["file"]["size"] > 24000000)) {
+        }else if (($_FILES["file"]["size"] > 24000000)) { // File size validation
             $msg = "<div class='alert alert-danger' role='alert'>File size exceeds 24MB.</div>";
 			return $msg;
         }else{
+            // Moved to local folder
             $fname = time().'.'.$file_extension;
 			$move = move_uploaded_file($_FILES['file']['tmp_name'],'../../assets/uploads/'.$fname);
+
+            // Store to database
             if ($move) {
                 $name = $_POST['name'];
                 $description = $_POST['description'];
@@ -56,6 +67,7 @@ Class File {
         
     }
 
+    // Return pecific users file list
     public function getIndividualUsersFiles()
     {
         $user = $_SESSION["userid"];
@@ -64,6 +76,7 @@ Class File {
         return $result;
     }
 
+    // Return all sharebale files
     public function getAllPublicFiles()
     {
         $query = "SELECT * FROM files WHERE is_public='1'";
@@ -71,6 +84,8 @@ Class File {
         return $result; 
     }
 
+    // Delete a specific file
+    // Redirect to index page with session
     public function deleteFile($id)
     {   
         $query = "SELECT * FROM files WHERE id='$id'";
@@ -91,6 +106,7 @@ Class File {
         }
     }
 
+    // Update private file to shareable 
     public function shareFile($id)
     {
         $query = "UPDATE files SET is_public='1' WHERE id='$id'";
@@ -103,6 +119,7 @@ Class File {
         }
     }
 
+    // Making file downloadable
     public function downloadFile($id)
     {
         $query = "SELECT * FROM files WHERE id='$id'";
@@ -122,6 +139,14 @@ Class File {
             readfile($downloadable);
             exit;
         }
+    }
+
+    // Count number of public files
+    public function countPublicFiles()
+    {
+        $sql = "SELECT * FROM files WHERE is_public='1'";
+        $result = $this->db->count($sql);
+        return $result;
     }
 
 }

@@ -1,17 +1,20 @@
 <?php
 namespace App\Lib;
 
+// Databse connection credentials
 define("DB_HOST", "db");
 define("DB_USER", "root");
 define("DB_PASS", "example");
 define("DB_NAME", "fms");
 
+/**
+*Database Class
+**/
 Class Database{
     public $host   = DB_HOST;
     public $user   = DB_USER;
     public $pass   = DB_PASS;
     public $dbname = DB_NAME;
- 
  
     public $link;
     public $error;
@@ -74,5 +77,17 @@ Class Database{
         return false;
       }
     }
+
+    // Count table rows
+    public function count($query){
+      $result = $this->link->query($query) or 
+        die($this->link->error.__LINE__);
+        if($result->num_rows > 0){
+          return $result->num_rows;
+        } else {
+          return false;
+      }
+    }
+
 
 }

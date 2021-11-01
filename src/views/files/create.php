@@ -1,15 +1,23 @@
 <?php 
 require_once "../../../vendor/autoload.php";
+
 use App\Lib\Session;
 use App\Classes\File;
+
+// Initialize Session
 Session::checkSession();
+
+// Instance of classes
 $fu = new File();
 
+
+// File upload request
 if ($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['upload'])) {
     if($_FILES['file']['size'] != 0){
         $msg = $fu->storeFiletoDatabase($_POST);
     }
  }
+
 ?>
 
 <!DOCTYPE html>
@@ -47,10 +55,11 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['upload'])) {
       <div class="container-fluid">
         <div class="row">
         <div class="col-md-12">
+            <!-- Display success or error messages -->
             <?php 
-                if($msg){
-                    echo $msg;
-                }
+              if($msg){
+                  echo $msg;
+              }
             ?>
             <div class="card">
               <div class="card-header">
@@ -60,6 +69,8 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['upload'])) {
                 </div>
               </div>
               <!-- /.card-header -->
+
+              <!-- File upload form -->
               <form id="quickForm" action="" method="POST" enctype="multipart/form-data">
                 <div class="card-body">
                   <div class="form-group">
@@ -111,11 +122,15 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['upload'])) {
 <script src="../../assets/plugins/jquery-validation/additional-methods.min.js"></script>
 <!-- bs-custom-file-input -->
 <script src="../../assets/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+
+<!-- File name on input field -->
 <script>
 $(function () {
   bsCustomFileInput.init();
 });
 </script>
+
+<!-- Frontend form validation -->
 <script>
 $(function () {
   $('#quickForm').validate({
@@ -153,10 +168,6 @@ $(function () {
   });
 });
 </script>
-<script>
-  setTimeout(()=>{
-            document.querySelector('.alert').remove();
-        }, 4000);
-</script>
+
 </body>
 </html>

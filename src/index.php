@@ -1,20 +1,39 @@
 <?php
+// Base URL
 define('__BASE_URI__', '/src/');
 require_once "../vendor/autoload.php";
 
 use App\Lib\Session;
 use App\Classes\File;
+use App\Classes\User;
 
-
+// Initialize Session
 Session::checkSession();
-// Get only public files
+
+// Instance of classes
 $file = new File();
+$user = new User();
+
+
+// Get only public files
 $files = $file->getAllPublicFiles();
-//Logout
+
+// Count public files
+$file_count = $file->countPublicFiles();
+
+// Count users
+$user_count = $user->countAllUsers();
+
+// Logout request
 if (isset($_GET['action']) && $_GET['action']=='logout') {
   Session::destroy();
 }
 
+// File download request
+if(isset($_GET['download'])){
+  $fID = $_GET['download'];
+  $msg = $file->downloadFile($fID);
+}
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +47,6 @@ if (isset($_GET['action']) && $_GET['action']=='logout') {
 
   <!-- Navbar -->
   <?php require_once 'views/partials/navbar.php' ?>
-  <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -54,7 +72,7 @@ if (isset($_GET['action']) && $_GET['action']=='logout') {
           <div class="col-lg-6 col-6">
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>44</h3>
+                <h3><?php echo $user_count; ?></h3>
 
                 <p>User Registrations</p>
               </div>
@@ -67,9 +85,9 @@ if (isset($_GET['action']) && $_GET['action']=='logout') {
           <div class="col-lg-6 col-6">
             <div class="small-box bg-danger">
               <div class="inner">
-                <h3>65</h3>
+                <h3><?php echo $file_count; ?></h3>
 
-                <p>Unique Visitors</p>
+                <p>Total Files</p>
               </div>
               <div class="icon">
                 <i class="ion ion-pie-graph"></i>
@@ -118,14 +136,13 @@ if (isset($_GET['action']) && $_GET['action']=='logout') {
                       </td>
                       <td>
                           <a type="button" title="Download"
-                              href="">
+                              href="index.php?download=<?php echo $file['id']; ?>">
                               <i class="fas fa-download text-blue"></i>
                           </a>  
                       </td>
                     </tr>
 
-
-                    <?php $i++; }?>
+                    <?php $i++; } //end of while?>
                   </tbody>
                 </table>
               </div>

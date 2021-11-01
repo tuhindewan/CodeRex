@@ -5,14 +5,19 @@ namespace App\Classes;
 use App\Lib\Database;
 use App\Lib\Session;
 
+/**
+*Database Class
+**/
 Class Auth {
     private $db;
 
+	// Initiate database connection
 	function __construct()
 	{
 		$this->db = new Database();
 	}
 
+	// User login feature
 	public function login($data){
 
 		$password = md5($_POST['password']);

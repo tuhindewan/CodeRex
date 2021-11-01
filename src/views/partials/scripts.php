@@ -35,3 +35,10 @@ define('__BASE_URI__', '/src/');
 
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="<?php echo __BASE_URI__ ?>assets/dist/js/pages/dashboard.js"></script>
+
+<!-- Remove alert message after 4 second -->
+<script>
+  setTimeout(()=>{
+            document.querySelector('.alert').remove();
+        }, 3000);
+</script>

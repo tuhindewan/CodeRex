@@ -1,21 +1,34 @@
 <?php 
 require_once "../../../vendor/autoload.php";
+//Base Url
 define('__BASE_URI__', '/src/');
+
 use App\Lib\Session;
 use App\Classes\File;
-$file = new File();
+
+// Initialize Session
 Session::checkSession();
+
+// Instance of classes
+$file = new File();
+
+
+// Get files related to specific user
 $files = $file->getIndividualUsersFiles();
+
+// File remove request
 if(isset($_GET['del'])){
   $fID = $_GET['del'];
   $msg = $file->deleteFile($fID);
 }
 
+// File shareable request
 if(isset($_GET['share'])){
   $fID = $_GET['share'];
   $msg = $file->shareFile($fID);
 }
 
+// File download request
 if(isset($_GET['download'])){
   $fID = $_GET['download'];
   $msg = $file->downloadFile($fID);
@@ -142,10 +155,6 @@ if(isset($_GET['download'])){
 
 <!-- javascrpit files -->
 <?php require_once '../partials/scripts.php' ?>
-<script>
-  setTimeout(()=>{
-            document.querySelector('.alert').remove();
-        }, 3000);
-</script>
+
 </body>
 </html>
