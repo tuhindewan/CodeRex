@@ -32,11 +32,11 @@ A simple File Management System
   # Developement Resources
   ##### Project directory
  
-  [CodeRex](http://127.0.0.1:8081/src/) - will get access on login page
+  [http://127.0.0.1:8081/src/](http://127.0.0.1:8081/src/) - will get access on login page
   
   ##### Database
  
-  [MySQL](http://localhost:8080/) - will get access on database
+  [http://localhost:8080/](http://localhost:8080/) - will get access on database
   
   # Guidelines
   ##### Database
