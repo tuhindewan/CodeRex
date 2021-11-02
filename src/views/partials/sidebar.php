@@ -1,6 +1,10 @@
 <?php  
   use App\Lib\Session;
   session_start();
+
+  // Select directory name for active menu
+  $directoryURI = $_SERVER['REQUEST_URI'];
+  $path = parse_url($directoryURI, PHP_URL_PATH);
 ?>
 
 <!-- Brand Logo -->
@@ -39,7 +43,7 @@
       <!-- Add icons to the links using the .nav-icon class
             with font-awesome or any other icon font library -->
       <li class="nav-item menu-open">
-        <a href="<?php echo __BASE_URI__ ?>" class="nav-link active">
+        <a href="<?php echo __BASE_URI__ ?>" class="nav-link <?php if($path =='/src/' || $path =='/src/index.php'){echo 'active';}?>">
           <i class="nav-icon fas fa-tachometer-alt"></i>
           <p>
             Dashboard
@@ -48,7 +52,7 @@
       </li>
       <?php if(Session::get('access') == '1'){ ?>
       <li class="nav-item menu-open">
-        <a href="<?php echo __BASE_URI__ ?>views/files" class="nav-link ">
+        <a href="<?php echo __BASE_URI__ ?>views/files" class="nav-link <?php if($path =="/src/views/files/" || $path =="/src/views/files/index.php" || $path =="/src/views/files/create.php"){echo 'active';}?>">
           <i class="nav-icon fas fa-file"></i>
           <p>
             Files
