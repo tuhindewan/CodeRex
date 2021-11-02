@@ -42,8 +42,7 @@ A simple File Management System
   ##### Database
   <pre>
   1. Login credentials - username: root, password: example
-  2. Create database name as "fms"
-  3. Import database (Attached on project root directory)
+  2. Import database (Attached on project root directory)
   </pre>
   
    ##### Project
